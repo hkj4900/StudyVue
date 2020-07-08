@@ -11,8 +11,8 @@
     </v-app-bar>
 
     <v-content class = 'textField' >
-      <input type = 'text' style = "width:100%" v-model="ToDoItem" placeholder="할 일을 입력해주세요">
-      <v-btn @click="inputToDoItem">추가</v-btn>
+      <input type = 'text' style = "width:95%" v-model="ToDoItem" placeholder="할 일을 입력해주세요">
+      <v-btn style="min-width: 5px" @click="inputToDoItem">추가</v-btn>
       <v-card style = "width: 100%; margin-top: 20px; height: 5%; display: flex; align-items: center; justify-content: center;" v-for="(item, i) in ToDoList" :key="i">{{item}}</v-card>
     </v-content>
   </v-app>
