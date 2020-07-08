@@ -10,10 +10,10 @@
       <v-spacer></v-spacer>
     </v-app-bar>
 
-    <v-content class = 'textField'>
-      <input type = 'text' v-model="ToDoItem" placeholder="할 일을 입력해주세요">
+    <v-content class = 'textField' >
+      <input type = 'text' style = "width:100%" v-model="ToDoItem" placeholder="할 일을 입력해주세요">
       <v-btn @click="inputToDoItem">추가</v-btn>
-      <p>{{this.ToDoList}}</p>
+      <v-card style = "width: 100%; margin-top: 20px; height: 5%; display: flex; align-items: center; justify-content: center;" v-for="(item, i) in ToDoList" :key="i">{{item}}</v-card>
     </v-content>
   </v-app>
 </template>
@@ -44,7 +44,7 @@ export default {
 
 <style scoped>
 .textField{
-  width: 300px;
+  width: 70%;
   left: 0;
   right: 0;
   margin-left: auto;
