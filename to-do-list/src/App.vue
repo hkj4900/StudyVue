@@ -10,11 +10,12 @@
       <v-spacer></v-spacer>
     </v-app-bar>
 
-    <v-content class = 'textField' >
-      <input type = 'text' style = "width:95%" v-model="ToDoItem" placeholder="할 일을 입력해주세요">
-      <v-btn style="min-width: 5px" @click="inputToDoItem">추가</v-btn>
-      <v-card style = "width: 100%; margin-top: 20px; height: 5%; display: flex; align-items: center; justify-content: center;" v-for="(item, i) in ToDoList" :key="i">{{item}}</v-card>
+    <v-content class = 'mainField' >
+      <input type = 'text' class = "inputField" v-model="ToDoItem" placeholder="할 일을 입력해주세요">
+      <v-btn dark class="button" @click="inputToDoItem">추가</v-btn>
+      <v-card @click="moveList(item)" class="cardStyle" v-for="(item, i) in ToDoList" :key="i">{{item}}</v-card>
     </v-content>
+    <v-card class="cardStyle" v-for="(item, i) in completeList" :key="i">{{item}}</v-card>
   </v-app>
 </template>
 
@@ -28,7 +29,8 @@ export default {
 
   data: () => ({
     ToDoItem: '',
-    ToDoList: []
+    ToDoList: [],
+    completeList: []
   }),
   methods: {
     inputToDoItem () {
@@ -37,18 +39,43 @@ export default {
       let listIndex = this.ToDoList.length
       this.ToDoList[listIndex] = this.ToDoItem
       this.ToDoItem = ''
+    },
+    moveList(item) {
+      console.log(item)
+      this.completeList.push(item)
     }
   }
 };
 </script>
 
 <style scoped>
-.textField{
+.mainField{
   width: 70%;
   left: 0;
   right: 0;
   margin-left: auto;
   margin-right: auto;
   margin-top: 15px;
+}
+.inputField{
+  width:90%;
+  height: 40px;
+  border: solid;
+  border-radius: 10px;
+}
+.button {
+  margin-left: 5px;
+  min-width: 20%;
+  max-width: 20%;
+  min-height: 40px;
+  max-height: 40px;
+}
+.cardStyle {
+  width: 90%;
+  margin-top: 13px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>
