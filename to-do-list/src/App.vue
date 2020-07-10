@@ -18,6 +18,7 @@
           <h4>해야할 일</h4>
           <v-card @click="moveToCompleteList(item)" class="cardStyle" v-for="(item, i) in ToDoList" :key="i">{{item}}</v-card>
         </v-col>
+        <p></p>
         <v-col>
           <h4>완료한 일</h4>
           <v-card @click="moveToToDoList(item)" class="cardStyle" v-for="(item, i) in completeList" :key="i">{{item}}</v-card>
