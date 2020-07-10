@@ -13,9 +13,17 @@
     <v-content class = 'mainField' >
       <input type = 'text' class = "inputField" v-model="ToDoItem" placeholder="할 일을 입력해주세요">
       <v-btn dark class="button" @click="inputToDoItem">추가</v-btn>
-      <v-card @click="moveList(item)" class="cardStyle" v-for="(item, i) in ToDoList" :key="i">{{item}}</v-card>
+      <v-row>
+        <v-col>
+          <h4>해야할 일</h4>
+          <v-card @click="moveToCompleteList(item)" class="cardStyle" v-for="(item, i) in ToDoList" :key="i">{{item}}</v-card>
+        </v-col>
+        <v-col>
+          <h4>완료한 일</h4>
+          <v-card @click="moveToToDoList(item)" class="cardStyle" v-for="(item, i) in completeList" :key="i">{{item}}</v-card>
+        </v-col>
+      </v-row>
     </v-content>
-    <v-card class="cardStyle" v-for="(item, i) in completeList" :key="i">{{item}}</v-card>
   </v-app>
 </template>
 
@@ -40,10 +48,16 @@ export default {
       this.ToDoList[listIndex] = this.ToDoItem
       this.ToDoItem = ''
     },
-    moveList(item) {
-      console.log(item)
+    moveToCompleteList(item) {
+      var index = this.ToDoList.indexOf(item);
+      this.ToDoList.splice(index, 1);
       this.completeList.push(item)
-    }
+    },
+    moveToToDoList(item) {
+      var index = this.completeList.indexOf(item);
+      this.completeList.splice(index, 1);
+      this.ToDoList.push(item)
+    },
   }
 };
 </script>
@@ -77,5 +91,9 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+h4{
+  width: 90%;
+  text-align: center;
 }
 </style>
