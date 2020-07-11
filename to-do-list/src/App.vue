@@ -16,11 +16,29 @@
       <v-row>
         <v-col>
           <h4>해야할 일</h4>
-          <v-card @click="moveToCompleteList(item)" class="cardStyle" v-for="(item, i) in ToDoList" :key="i">{{item}}</v-card>
+          <v-card  class="cardStyle" v-for="(item, i) in ToDoList" :key="i">
+            <v-row>
+              <v-col class="textStyle" :cols = "10" @click="moveToCompleteList(item)">
+                {{item}}
+              </v-col>
+              <v-col>
+                <v-btn @click = "deleteToDoItem(item)">삭제</v-btn>
+              </v-col>
+            </v-row>
+          </v-card>
         </v-col>
         <v-col>
           <h4>완료한 일</h4>
-          <v-card @click="moveToToDoList(item)" class="cardStyle" v-for="(item, i) in completeList" :key="i">{{item}}</v-card>
+          <v-card class="cardStyle" v-for="(item, i) in completeList" :key="i">
+            <v-row>
+              <v-col class="textStyle" :cols = "10" @click="moveToToDoList(item)">
+                {{item}}
+              </v-col>
+              <v-col>
+                <v-btn @click = "deleteCompleteItem(item)">삭제</v-btn>
+              </v-col>
+            </v-row>
+          </v-card>
         </v-col>
       </v-row>
     </v-content>
@@ -48,16 +66,23 @@ export default {
       this.ToDoList[listIndex] = this.ToDoItem
       this.ToDoItem = ''
     },
-    moveToCompleteList(item) {
+    deleteToDoItem(item) {
       var index = this.ToDoList.indexOf(item);
       this.ToDoList.splice(index, 1);
+    },
+    deleteCompleteItem(item) {
+      var index = this.completeList.indexOf(item);
+      this.completeList.splice(index, 1);
+    },
+    moveToCompleteList(item) {
+      this.deleteToDoItem(item)
       this.completeList.push(item)
     },
     moveToToDoList(item) {
-      var index = this.completeList.indexOf(item);
-      this.completeList.splice(index, 1);
+      this.deleteCompleteItem(item)
       this.ToDoList.push(item)
-    },
+    }
+    
   }
 };
 </script>
@@ -88,6 +113,12 @@ export default {
   width: 90%;
   margin-top: 13px;
   height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.textStyle {
+  text-align: center;
   display: flex;
   align-items: center;
   justify-content: center;
