@@ -22,7 +22,7 @@
                 {{item}}
               </v-col>
               <v-col>
-                <v-btn @click = "deleteToDoItem(item)">삭제</v-btn>
+                <v-btn dark @click = "deleteToDoItem(item)">삭제</v-btn>
               </v-col>
             </v-row>
           </v-card>
@@ -35,7 +35,7 @@
                 {{item}}
               </v-col>
               <v-col>
-                <v-btn @click = "deleteCompleteItem(item)">삭제</v-btn>
+                <v-btn dark @click = "deleteCompleteItem(item)">삭제</v-btn>
               </v-col>
             </v-row>
           </v-card>
