@@ -18,12 +18,20 @@
           <h4>해야할 일</h4>
           <v-card  class="cardStyle" v-for="(item, i) in ToDoList" :key="i">
             <v-row>
-              <v-col class="textStyle" :cols = "10" @click="moveToCompleteList(item)">
+              <v-col v-if="i != tempItemIndex" class="textStyle" :cols = "10" @click="moveToCompleteList(item)">
                 {{item}}
               </v-col>
-              <v-col>
-                <v-btn dark @click = "deleteToDoItem(item)">삭제</v-btn>
+               <v-col v-else class="textStyle" :cols = "10">
+                <input type = 'text' placeholder="수정할 문구를 입력해주세요" v-model="tempItem">
               </v-col>
+                <v-col>
+                  <v-row>
+                    <v-btn dark x-small @click = "modifyToDoItem(i)">수정</v-btn>
+                  </v-row>
+                  <v-row>
+                    <v-btn dark x-small @click = "deleteToDoItem(item)">삭제</v-btn>
+                  </v-row>
+                </v-col>
             </v-row>
           </v-card>
         </v-col>
@@ -56,7 +64,10 @@ export default {
   data: () => ({
     ToDoItem: '',
     ToDoList: [],
-    completeList: []
+    completeList: [],
+    modifySignal: false,
+    tempItemIndex: '-1',
+    tempItem: ''
   }),
   methods: {
     inputToDoItem () {
@@ -73,6 +84,19 @@ export default {
     deleteCompleteItem(item) {
       var index = this.completeList.indexOf(item);
       this.completeList.splice(index, 1);
+    },
+    modifyToDoItem(i) {
+      if (!this.modifySignal) {
+        console.log ('false이면'); this.tempItemIndex = i;
+      }
+      if (this.tempItemIndex == i) {
+        console.log('error')
+        console.log(1);
+        this.ToDoList[i] = this.tempItem
+        this.tempItem = ''
+        this.tempItemIndex = -1;
+      }
+      this.modifySignal = !this.modifySignal
     },
     moveToCompleteList(item) {
       this.deleteToDoItem(item)
