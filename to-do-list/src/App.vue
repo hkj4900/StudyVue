@@ -26,7 +26,8 @@
               </v-col>
                 <v-col>
                   <v-row>
-                    <v-btn dark x-small @click = "modifyToDoItem(i)">수정</v-btn>
+                    <v-btn v-if="i != tempItemIndex" dark x-small @click = "modifyToDoItem(i)" :disabled="modifySignal && i != tempItemIndex">수정</v-btn>
+                    <v-btn v-else dark x-small @click = "confirmToDoItem(i)">확인</v-btn>
                   </v-row>
                   <v-row>
                     <v-btn dark x-small @click = "deleteToDoItem(item)">삭제</v-btn>
@@ -86,16 +87,26 @@ export default {
       this.completeList.splice(index, 1);
     },
     modifyToDoItem(i) {
-      if (!this.modifySignal) {
-        console.log ('false이면'); this.tempItemIndex = i;
-      }
-      if (this.tempItemIndex == i) {
-        console.log('error')
-        console.log(1);
-        this.ToDoList[i] = this.tempItem
-        this.tempItem = ''
-        this.tempItemIndex = -1;
-      }
+      // 아무것도 입력하지 않았을 때 수정되지 않는 기능 추가
+      // 항목 변경 후 다른 인덱스의 수정을 누르면 그 인덱스의 항목이 업데이트가 되는 문제 해결하기
+      // if (!this.modifySignal) {
+      //   this.tempItemIndex = i;
+      // }
+      // else {
+      //   this.ToDoList[i] = this.tempItem
+      //   this.tempItem = ''
+      //   this.tempItemIndex = -1;
+      // }
+      this.tempItem = this.ToDoList[i]
+      this.tempItemIndex = i;
+      this.modifySignal = !this.modifySignal
+    },
+    confirmToDoItem(i){
+      
+      this.ToDoList[i] = this.tempItem
+      this.tempItem = ''
+      
+      this.tempItemIndex = -1;
       this.modifySignal = !this.modifySignal
     },
     moveToCompleteList(item) {
