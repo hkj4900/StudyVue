@@ -105,7 +105,7 @@ export default {
       if (this.tempItem !== '') {
         this.ToDoList[i] = this.tempItem
         this.tempItem = ''
-      
+      }
       this.tempItemIndex = -1;
       this.modifySignal = !this.modifySignal
     },
