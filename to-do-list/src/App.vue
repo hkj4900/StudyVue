@@ -102,9 +102,9 @@ export default {
       this.modifySignal = !this.modifySignal
     },
     confirmToDoItem(i){
-      
-      this.ToDoList[i] = this.tempItem
-      this.tempItem = ''
+      if (this.tempItem !== '') {
+        this.ToDoList[i] = this.tempItem
+        this.tempItem = ''
       
       this.tempItemIndex = -1;
       this.modifySignal = !this.modifySignal
