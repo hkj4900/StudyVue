@@ -10,41 +10,49 @@
       <v-spacer></v-spacer>
     </v-app-bar>
 
-    <v-content class = 'mainField' >
-      <input type = 'text' class = "inputField" v-model="ToDoItem" placeholder="할 일을 입력해주세요">
-      <v-btn dark class="button" @click="inputToDoItem">추가</v-btn>
+    <v-content class = 'main-field' >
+      <v-row style = "width: 100%">
+        <input type = 'text' class = "input-field" v-model="ToDoItem" placeholder="할 일을 입력해주세요">
+        <button class="button" @click="inputToDoItem">추가</button>
+      </v-row>
       <v-row>
         <v-col>
           <h4>해야할 일</h4>
-          <v-card  class="cardStyle" v-for="(item, i) in ToDoList" :key="i">
-            <v-row>
-              <v-col v-if="i != tempItemIndex" class="textStyle" :cols = "10" @click="moveToCompleteList(item)">
+          <v-card  class="card-style" v-for="(item, i) in ToDoList" :key="i">
+            <v-layout row>
+              <v-layout col v-if="i != tempItemIndex" class="text-style" :cols = "10" @click="moveToCompleteList(item)">
                 {{item}}
-              </v-col>
-               <v-col v-else class="textStyle" :cols = "10">
+              </v-layout>
+              <v-layout col v-else class="text-style" :cols = "10">
                 <input type = 'text' placeholder="수정할 문구를 입력해주세요" v-model="tempItem">
-              </v-col>
-                <v-col>
-                  <v-row>
-                    <v-btn v-if="i != tempItemIndex" dark x-small @click = "modifyToDoItem(i)" :disabled="modifySignal && i != tempItemIndex">수정</v-btn>
-                    <v-btn v-else dark x-small @click = "confirmToDoItem(i)">확인</v-btn>
-                  </v-row>
-                  <v-row>
-                    <v-btn dark x-small @click = "deleteToDoItem(item)">삭제</v-btn>
-                  </v-row>
-                </v-col>
-            </v-row>
+              </v-layout>
+              <v-layout col class="button-layout">
+                <v-flex>
+                  <v-layout row>
+                    <v-flex>
+                      <button v-if="i != tempItemIndex" dark class = "small-button" @click = "modifyToDoItem(i)" :disabled="modifySignal && i != tempItemIndex">수정</button>
+                      <button v-else class = "small-button" @click = "confirmToDoItem(i)">확인</button>
+                    </v-flex>
+                  </v-layout>
+                  <v-layout row>
+                    <v-flex>
+                      <button class = "small-button" @click = "deleteToDoItem(item)">삭제</button>
+                    </v-flex>
+                  </v-layout>
+                </v-flex>
+              </v-layout>
+            </v-layout>
           </v-card>
         </v-col>
         <v-col>
           <h4>완료한 일</h4>
-          <v-card class="cardStyle" v-for="(item, i) in completeList" :key="i">
+          <v-card class="card-style" v-for="(item, i) in completeList" :key="i">
             <v-row>
-              <v-col class="textStyle" :cols = "10" @click="moveToToDoList(item)">
+              <v-col class="text-style" :cols = "10" @click="moveToToDoList(item)">
                 {{item}}
               </v-col>
               <v-col>
-                <v-btn dark @click = "deleteCompleteItem(item)">삭제</v-btn>
+                <button class = "small-button" style="height: 40px" @click = "deleteCompleteItem(item)">삭제</button>
               </v-col>
             </v-row>
           </v-card>
@@ -87,16 +95,6 @@ export default {
       this.completeList.splice(index, 1);
     },
     modifyToDoItem(i) {
-      // 아무것도 입력하지 않았을 때 수정되지 않는 기능 추가
-      // 항목 변경 후 다른 인덱스의 수정을 누르면 그 인덱스의 항목이 업데이트가 되는 문제 해결하기
-      // if (!this.modifySignal) {
-      //   this.tempItemIndex = i;
-      // }
-      // else {
-      //   this.ToDoList[i] = this.tempItem
-      //   this.tempItem = ''
-      //   this.tempItemIndex = -1;
-      // }
       this.tempItem = this.ToDoList[i]
       this.tempItemIndex = i;
       this.modifySignal = !this.modifySignal
@@ -123,7 +121,7 @@ export default {
 </script>
 
 <style scoped>
-.mainField{
+.main-field{
   width: 70%;
   left: 0;
   right: 0;
@@ -131,20 +129,35 @@ export default {
   margin-right: auto;
   margin-top: 15px;
 }
-.inputField{
-  width:90%;
+.input-field{
+  width: 90%;
   height: 40px;
   border: solid;
   border-radius: 10px;
 }
 .button {
+  width: 6%;
+  height: 40px;
+  background-color: lightgrey;
+  border-radius: 10px;
   margin-left: 5px;
-  min-width: 20%;
-  max-width: 20%;
-  min-height: 40px;
-  max-height: 40px;
 }
-.cardStyle {
+.small-button {
+  font-size: 10px;
+  background-color: lightgrey;
+  border-radius: 10px;
+  width: 10%;
+  height: 20px;
+}
+
+.button-layout {
+  position:absolute;
+  left: 88%;
+  bottom: 50%;
+  transform: translate(0, 50%);
+}
+
+.card-style {
   width: 90%;
   margin-top: 13px;
   height: 50px;
@@ -152,7 +165,7 @@ export default {
   align-items: center;
   justify-content: center;
 }
-.textStyle {
+.text-style {
   text-align: center;
   display: flex;
   align-items: center;
